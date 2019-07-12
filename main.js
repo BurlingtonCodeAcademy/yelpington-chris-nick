@@ -25,7 +25,9 @@ async function getAddress(name) {
 async function displayMap(restaurant) {
   // get the address of the restaurant passed into displayMap
   const address = await getAddress(restaurant);
-  console.log({address: address});
+  const website = await getWebsite(restaurant);
+  console.log({restaurant});
+  console.log({address});
 
   // fetch the json data from nomatim API for the address requested
   fetch(`https://nominatim.openstreetmap.org/search/?q=${address}&format=json`)
@@ -45,9 +47,8 @@ async function displayMap(restaurant) {
     if(address !== 'Burlington, VT 05401') {
       // set marker on the coordinates of the restaurant
       L.marker([json[0].lat, json[0].lon]).addTo(map)
-        // can set notes in popup for later story
-        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-        .openPopup();
+      .on('click', () => document.location.href = website);
+        
     // otherwise, address is Burlington so display all the markers
     } else {
       // pass map so function knows where to put markers
@@ -63,22 +64,51 @@ async function displayAllMarkers(map) {
   console.log('were gonna display all the markers');
   // create an array to hold to lats and longs of all restaurants
   let latsLongs = [];
+
   // fetch all restaurant names & get json, wait to finish
   let response = await fetch('all.json');
   let json = await response.json();
+  let address;
+  let oneLatLong;
+  let website;
 
-  // find lat and long for each address and push to array
-  for await (const elem of json) {
-    let address = await getAddress(elem);
-    let oneLatLong = await getLatLon(address);
+  // find lat and long for each restaurant and push to array
+  for await (const name of json) {
+    address = await getAddress(name);
+    oneLatLong = await getLatLon(address);
+    website = await getWebsite(name);  // get website
+    oneLatLong.website = website;      // add website to object 
     latsLongs.push(oneLatLong);
   }
 
   // for each lat and long, add a marker to the map
   latsLongs.forEach(latlon => {
     L.marker([latlon.lat, latlon.lon]).addTo(map)
-    .bindPopup('Imma popup ya hurd');
+    // set click event to go to restaurant's website
+    .on('click', () => document.location.href = latlon.website);
   })
+}
+
+// takes the name of a restaurant, fetches the json
+// file for that restaurant, and returns the website 
+async function getWebsite(name) {
+  //if no name is passed as an argument
+  if (!name) {
+    console.log("no place name specfied");
+    // return index.html because there is no website
+    return 'index.html';
+  } else {
+    console.log("fetching website for '" + name + "'");
+  
+    //fetch restaurant json as a Promise, wait for it to finish
+    const response = await fetch(name + '.json');
+    // convert response to json, wait for it to finsih
+    const object = await response.json();
+    //get website and return
+    const website = object.website;
+    console.log(website);
+    return website;
+    }
 }
 
 // takes an address as an argument
@@ -122,18 +152,26 @@ function spaceRestaurantName(restaurant) {
   return restaurant;
 }
 
-// get the restaurant in the query parameter
-let restaurantName = document.location.href.split('restaurant=').slice(-1)[0];
-console.log({restaurantName: restaurantName});
 
-// if there is no restuarant query
-if(!restaurantName.includes('restaurant=')) {
-  console.log('display all markers');
-  // display map with all markers and create the links
-  displayMap();
-  createLinks();
-  // otherwise, display the map with the pin for that restaurant
-} else {
-  displayMap(restaurantName);
-  createLinks();
+// main function is the driver for the javascript file
+function main() {
+  // get the query if there is one
+  let query = document.location.href.split('?').slice(-1)[0];
+  console.log({query: query});
+
+  // if there is no restuarant query
+  if(!query.includes('restaurant=')) {
+    console.log('display all markers');
+    // display map with all markers and create the links
+    displayMap();
+    createLinks();
+  } else {  
+    // get restaurant name from query
+    restaurantName = query.split('=').slice(-1)[0];
+    displayMap(restaurantName); // display on map
+    createLinks();
+  }
 }
+
+// start js
+main();
