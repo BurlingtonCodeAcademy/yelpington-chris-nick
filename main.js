@@ -158,26 +158,34 @@ function spaceRestaurantName(restaurant) {
   return restaurant;
 }
 
+// this function fetches the notes for a particular
+// restaurant and displays them in the browser
 function showRestaurantNotes(restaurantName) {
   console.log('showing notes')
+  // get container and create elements
   const container = document.getElementById('container');
   const notesHeader = document.createElement('h2');
   const notesDiv = document.createElement('div');
 
   notesHeader.textContent = `Notes for ${spaceRestaurantName(restaurantName)}:`;
 
+  // fetch the restaurant json
   fetch(restaurantName + '.json')
   .then(response => response.json())
   .then(json => {
     const notes = json.notes;
     console.log({notes});
+    // for each note in the json
     notes.forEach(note => {
       console.log(`creating note p for: ${note}`)
+      // create a p for each note
       const noteP = document.createElement('p');
-      noteP.textContent = note;
+      noteP.textContent = note;   // set content
       console.log('append note p to note div');
+      // append noteP to noteDiv
       notesDiv.appendChild(noteP);
     })
+    // append header and notes div to container
     container.appendChild(notesHeader);
     container.appendChild(notesDiv);
   })
