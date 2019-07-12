@@ -158,6 +158,31 @@ function spaceRestaurantName(restaurant) {
   return restaurant;
 }
 
+function showRestaurantNotes(restaurantName) {
+  console.log('showing notes')
+  const container = document.getElementById('container');
+  const notesHeader = document.createElement('h2');
+  const notesDiv = document.createElement('div');
+
+  notesHeader.textContent = `Notes for ${spaceRestaurantName(restaurantName)}:`;
+
+  fetch(restaurantName + '.json')
+  .then(response => response.json())
+  .then(json => {
+    const notes = json.notes;
+    console.log({notes});
+    notes.forEach(note => {
+      console.log(`creating note p for: ${note}`)
+      const noteP = document.createElement('p');
+      noteP.textContent = note;
+      console.log('append note p to note div');
+      notesDiv.appendChild(noteP);
+    })
+    container.appendChild(notesHeader);
+    container.appendChild(notesDiv);
+  })
+}
+
 
 // main function is the driver for the javascript file
 function main() {
@@ -176,6 +201,8 @@ function main() {
     restaurantName = query.split('=').slice(-1)[0];
     displayMap(restaurantName); // display on map
     createLinks();  // create links for html
+    // show notes for particular restaurant
+    showRestaurantNotes(restaurantName);
   }
 }
 
