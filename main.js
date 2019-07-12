@@ -124,7 +124,7 @@ async function getLatLon(address) {
 function createLinks() {
   const header = document.getElementById('header');
   const headerLink = document.createElement('a');
-  headerLink.textContent = 'Yelpinton!';
+  headerLink.textContent = 'Yelpington!';
   headerLink.href = 'index.html';
   header.appendChild(headerLink);
 

@@ -1,3 +1,35 @@
 #mapid {
+  float: left;
   height: 400px;
+  width: 700px;
+}
+
+#header {
+display: block;
+color: green;
+font-size: 90px;
+align-content: center;
+justify-content: center;
+text-align: center;
+background-color: black;
+border-radius: 1em;
+}
+
+#header a:visited{
+color: green
+}
+
+#links{
+  float: right;
+  list-style-type: none;
+  color: red;
+  padding: 0;
+}
+
+#links a:visited{
+  color:red;
+}
+
+#container *{
+  margin: .5% .5%;
 }
