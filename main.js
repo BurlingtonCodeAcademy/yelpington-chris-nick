@@ -122,6 +122,12 @@ async function getLatLon(address) {
 
 // function creates the links for all restaurant names in all.json
 function createLinks() {
+  const header = document.getElementById('header');
+  const headerLink = document.createElement('a');
+  headerLink.textContent = 'Yelpinton!';
+  headerLink.href = 'index.html';
+  header.appendChild(headerLink);
+
   // get ul element that will hold the links
   const linkContainer = document.getElementById('links');
   // fetch all addresses, convert to json
