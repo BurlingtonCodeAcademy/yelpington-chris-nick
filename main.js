@@ -34,7 +34,7 @@ async function displayMap(restaurant) {
     console.log({lat: json[0].lat, lon: json[0].lon});
     // assing the map variable, set it to id of html div
     // and set the view to lat and lon of restaurant
-    var map = L.map('mapid').setView([json[0].lat, json[0].lon], 20);
+    var map = L.map('mapid').setView([json[0].lat, json[0].lon], 16);
   
     // add tile layer to map, from Interactive Maps slides, change later?
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -48,9 +48,10 @@ async function displayMap(restaurant) {
         // can set notes in popup for later story
         .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
         .openPopup();
-    // otherwise, address is Burlington so display all the pins
+    // otherwise, address is Burlington so display all the markers
     } else {
-      displayAllPins();
+      // pass map so function knows where to put markers
+      displayAllMarkers(map);
     }
   });
 }
@@ -58,8 +59,8 @@ async function displayMap(restaurant) {
 // function handles showing all of the markers
 // on the map when an address is not specified
 // uses async/await method to fetch json
-async function displayAllPins() {
-  console.log('were gonna display all the pins');
+async function displayAllMarkers(map) {
+  console.log('were gonna display all the markers');
   // create an array to hold to lats and longs of all restaurants
   let latsLongs = [];
   // fetch all restaurant names & get json, wait to finish
@@ -72,6 +73,12 @@ async function displayAllPins() {
     let oneLatLong = await getLatLon(address);
     latsLongs.push(oneLatLong);
   }
+
+  // for each lat and long, add a marker to the map
+  latsLongs.forEach(latlon => {
+    L.marker([latlon.lat, latlon.lon]).addTo(map)
+    .bindPopup('Imma popup ya hurd');
+  })
 }
 
 // takes an address as an argument
@@ -121,8 +128,8 @@ console.log({restaurantName: restaurantName});
 
 // if there is no restuarant query
 if(!restaurantName.includes('restaurant=')) {
-  console.log('display all pins');
-  // display map with all pins and create the links
+  console.log('display all markers');
+  // display map with all markers and create the links
   displayMap();
   createLinks();
   // otherwise, display the map with the pin for that restaurant
