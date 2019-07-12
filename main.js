@@ -1,25 +1,3 @@
-// takes the name of a restaurant and fetches the json
-// file for that restaurant, 
-async function getAddress(name) {
-  //if no name is passed as an argument
-  if (!name) {
-    console.log("no place name specfied");
-    // return B. VT 05401 as the name of the place
-    return 'Burlington, VT 05401'
-  } else {
-    console.log("fetching place named '" + name + "'");
-  
-    //fetch restaurant json as a Promise, wait for it to finish
-    const response = await fetch(name + '.json');
-    // convert response to json, wait for it to finsih
-    const object = await response.json();
-    //get address and return
-    const address = object.address;
-    console.log(address);
-    return address;
-    }
-}
-
 // displayMap function handles displaying the 
 // pin on a particular restaurant
 async function displayMap(restaurant) {
@@ -57,6 +35,50 @@ async function displayMap(restaurant) {
   });
 }
 
+// takes the name of a restaurant and fetches the json
+// file for that restaurant, 
+async function getAddress(name) {
+  //if no name is passed as an argument
+  if (!name) {
+    console.log("no place name specfied");
+    // return B. VT 05401 as the name of the place
+    return 'Burlington, VT 05401'
+  } else {
+    console.log("fetching place named '" + name + "'");
+  
+    //fetch restaurant json as a Promise, wait for it to finish
+    const response = await fetch(name + '.json');
+    // convert response to json, wait for it to finsih
+    const object = await response.json();
+    //get address and return
+    const address = object.address;
+    console.log(address);
+    return address;
+    }
+}
+
+// takes the name of a restaurant, fetches the json
+// file for that restaurant, and returns the website 
+async function getWebsite(name) {
+  //if no name is passed as an argument
+  if (!name) {
+    console.log("no place name specfied");
+    // return index.html because there is no website
+    return 'index.html';
+  } else {
+    console.log("fetching website for '" + name + "'");
+  
+    //fetch restaurant json as a Promise, wait for it to finish
+    const response = await fetch(name + '.json');
+    // convert response to json, wait for it to finsih
+    const object = await response.json();
+    //get website and return
+    const website = object.website;
+    console.log(website);
+    return website;
+    }
+}
+
 // function handles showing all of the markers
 // on the map when an address is not specified
 // uses async/await method to fetch json
@@ -87,28 +109,6 @@ async function displayAllMarkers(map) {
     // set click event to go to restaurant's website
     .on('click', () => document.location.href = latlon.website);
   })
-}
-
-// takes the name of a restaurant, fetches the json
-// file for that restaurant, and returns the website 
-async function getWebsite(name) {
-  //if no name is passed as an argument
-  if (!name) {
-    console.log("no place name specfied");
-    // return index.html because there is no website
-    return 'index.html';
-  } else {
-    console.log("fetching website for '" + name + "'");
-  
-    //fetch restaurant json as a Promise, wait for it to finish
-    const response = await fetch(name + '.json');
-    // convert response to json, wait for it to finsih
-    const object = await response.json();
-    //get website and return
-    const website = object.website;
-    console.log(website);
-    return website;
-    }
 }
 
 // takes an address as an argument
@@ -158,6 +158,39 @@ function spaceRestaurantName(restaurant) {
   return restaurant;
 }
 
+// this function fetches the notes for a particular
+// restaurant and displays them in the browser
+function showRestaurantNotes(restaurantName) {
+  console.log('showing notes')
+  // get container and create elements
+  const container = document.getElementById('container');
+  const notesHeader = document.createElement('h2');
+  const notesDiv = document.createElement('div');
+
+  notesHeader.textContent = `Notes for ${spaceRestaurantName(restaurantName)}:`;
+
+  // fetch the restaurant json
+  fetch(restaurantName + '.json')
+  .then(response => response.json())
+  .then(json => {
+    const notes = json.notes;
+    console.log({notes});
+    // for each note in the json
+    notes.forEach(note => {
+      console.log(`creating note p for: ${note}`)
+      // create a p for each note
+      const noteP = document.createElement('p');
+      noteP.textContent = note;   // set content
+      console.log('append note p to note div');
+      // append noteP to noteDiv
+      notesDiv.appendChild(noteP);
+    })
+    // append header and notes div to container
+    container.appendChild(notesHeader);
+    container.appendChild(notesDiv);
+  })
+}
+
 
 // main function is the driver for the javascript file
 function main() {
@@ -175,7 +208,9 @@ function main() {
     // get restaurant name from query
     restaurantName = query.split('=').slice(-1)[0];
     displayMap(restaurantName); // display on map
-    createLinks();
+    createLinks();  // create links for html
+    // show notes for particular restaurant
+    showRestaurantNotes(restaurantName);
   }
 }
 
