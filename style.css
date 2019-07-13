@@ -1,35 +1,59 @@
-#mapid {
-  float: left;
-  height: 400px;
-  width: 700px;
+
+#container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr );
+  grid-template-areas:
+        'header header header header header'
+        'mapid  mapid  mapid  notes  links'
+        'mapid  mapid  mapid  notes  links'
+        'mapid  mapid  mapid  notes  links';
+  width: 80%;
+  margin: 0 10%;
 }
 
+
 #header {
-display: block;
-color: green;
-font-size: 90px;
-align-content: center;
-justify-content: center;
-text-align: center;
-background-color: black;
-border-radius: 1em;
+  grid-area: header;
+  color: green;
+  font-size: 90px;
+  background-color: black;
+  border-radius: 1em;
+}
+
+#mapid {
+  grid-area: mapid;
+}
+
+#notes {
+  grid-area: notes;
 }
 
 #header a:visited{
 color: green
 }
 
-#links{
-  float: right;
+#links {
+  grid-area: links;
+  display: flex;
+  flex-direction: column;
   list-style-type: none;
-  color: red;
   padding: 0;
+  justify-content: space-between;
+  /* align-items: flex-end; */
+}
+
+#links li {
+  width: 80%;
+}
+
+#links a {
+  padding: 10px 0;
+  text-decoration: none;
+  color: red;
 }
 
 #links a:visited{
   color:red;
 }
 
-#container *{
-  margin: .5% .5%;
-}

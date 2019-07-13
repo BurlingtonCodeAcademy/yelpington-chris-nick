@@ -163,7 +163,7 @@ function spaceRestaurantName(restaurant) {
 function showRestaurantNotes(restaurantName) {
   console.log('showing notes')
   // get container and create elements
-  const container = document.getElementById('container');
+  const notesContainer = document.getElementById('notes');
   const notesHeader = document.createElement('h2');
   const notesDiv = document.createElement('div');
 
@@ -185,9 +185,9 @@ function showRestaurantNotes(restaurantName) {
       // append noteP to noteDiv
       notesDiv.appendChild(noteP);
     })
-    // append header and notes div to container
-    container.appendChild(notesHeader);
-    container.appendChild(notesDiv);
+    // append header and notes div to notesContainer
+    notesContainer.appendChild(notesHeader);
+    notesContainer.appendChild(notesDiv);
   })
 }
 
