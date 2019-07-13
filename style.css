@@ -1,4 +1,8 @@
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -9,20 +13,29 @@
         'mapid  mapid  mapid  notes  links'
         'mapid  mapid  mapid  notes  links';
   width: 80%;
-  margin: 0 10%;
+  margin: 5% 8%;
+  grid-gap: 1.5em;
+  background-color: rgb(44, 168, 240);
+  border: 3px solid blue;
+  border-radius: 5px;
+  padding: 20px;
 }
 
 
 #header {
   grid-area: header;
-  color: green;
+  color: rgb(107, 39, 253);
   font-size: 90px;
-  background-color: black;
-  border-radius: 1em;
+  background-color: rgb(87, 87, 87);
+  border: 2px solid black;
+  border-radius: 0.5em;
+  text-align: center;
 }
 
 #mapid {
   grid-area: mapid;
+  border: 2px solid black;
+  border-radius: 2px;
 }
 
 #notes {
@@ -30,7 +43,7 @@
 }
 
 #header a:visited{
-color: green
+color: rgb(142, 89, 255);
 }
 
 #links {
@@ -40,6 +53,10 @@ color: green
   list-style-type: none;
   padding: 0;
   justify-content: space-between;
+  background-color: rgb(87, 87, 87);
+  border: 2px solid black;
+  border-radius: 2px;
+  padding: 5px;
   /* align-items: flex-end; */
 }
 
@@ -50,10 +67,10 @@ color: green
 #links a {
   padding: 10px 0;
   text-decoration: none;
-  color: red;
+  color: rgb(193, 164, 255);
 }
 
 #links a:visited{
-  color:red;
+  color:rgb(193, 164, 255);
 }
 

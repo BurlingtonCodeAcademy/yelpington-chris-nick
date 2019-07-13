@@ -154,7 +154,15 @@ function createLinks() {
 
 // replaces dashes in a restaurant name with spaces, capitalize in here?
 function spaceRestaurantName(restaurant) {
-  restaurant = restaurant.split('-').join(' ');
+  restaurant = restaurant.split('-');
+  console.log({restaurant});
+  restaurant.forEach(word => {
+    console.log(word);
+    console.log(word[0]);
+    console.log(word.slice(1));
+    word = word[0].toUpperCase() + word.slice(1);
+  });
+  restaurant.join(' ');
   return restaurant;
 }
 
