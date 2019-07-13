@@ -156,13 +156,13 @@ function createLinks() {
 function spaceRestaurantName(restaurant) {
   restaurant = restaurant.split('-');
   console.log({restaurant});
-  restaurant.forEach(word => {
-    console.log(word);
-    console.log(word[0]);
-    console.log(word.slice(1));
-    word = word[0].toUpperCase() + word.slice(1);
-  });
-  restaurant.join(' ');
+  // capitalize words in restaurant name
+  restaurant = restaurant.map(word => {
+    console.log('word: ' + word[0].toUpperCase() + word.slice(1));
+    return word[0].toUpperCase() + word.slice(1);
+  })
+  console.log({r2: restaurant});
+  restaurant = restaurant.join(' ');
   return restaurant;
 }
 

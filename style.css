@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 #container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -12,8 +13,9 @@
         'mapid  mapid  mapid  notes  links'
         'mapid  mapid  mapid  notes  links'
         'mapid  mapid  mapid  notes  links';
-  width: 80%;
-  margin: 5% 8%;
+  /* width: 80%; */
+  height: 80vh;
+  margin: 5%;
   grid-gap: 1.5em;
   background-color: rgb(44, 168, 240);
   border: 3px solid blue;
@@ -30,16 +32,38 @@
   border: 2px solid black;
   border-radius: 0.5em;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #mapid {
   grid-area: mapid;
   border: 2px solid black;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 #notes {
   grid-area: notes;
+}
+
+#notes h2 {
+  margin-bottom: 10px;
+}
+
+#notes p {
+  margin-top: 15px;
+}
+
+#notes p::before {
+  content: ">> ";
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+#notes div {
+  display: flex;
+  flex-direction: column;
 }
 
 #header a:visited{
@@ -55,13 +79,13 @@ color: rgb(142, 89, 255);
   justify-content: space-between;
   background-color: rgb(87, 87, 87);
   border: 2px solid black;
-  border-radius: 2px;
+  border-radius: 3px;
   padding: 5px;
   /* align-items: flex-end; */
 }
 
 #links li {
-  width: 80%;
+  width: 95%;
 }
 
 #links a {
