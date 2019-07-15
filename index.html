@@ -1,18 +1,22 @@
-<script>
-let name = document.location.pathname.slice(1);
-
-if (!name) {
-  console.log("no place name specfied");
-} else {
-  console.log("fetching place named '" + name + "'");
-
-  fetch(name + '.json')
-    .then(function (response) {
-      return response.text();
-    })
-    .then(function (myText) {
-      console.log(myText);
-    });
-}
-
-</script>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="container">
+      <h1 id="header"></h1>
+      <div id="mapid"></div>
+      <!-- links for each restaurant -->
+      <ul id="links"></ul>
+      <div id="notes"></div>
+    </div>
+  <script src="main.js"></script>
+  </body>
+</html>
